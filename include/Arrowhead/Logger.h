@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <time.h>
 
-namespace Arrow::Logging
+namespace arwh
 {
 	class LogSink
 	{
@@ -151,15 +151,15 @@ namespace Arrow::Logging
 		{
 			switch (severity)
 			{
-			case Logging::LogSeverity::Info:
+			case LogSeverity::Info:
 				return "Info";
-			case Logging::LogSeverity::Debug:
+			case LogSeverity::Debug:
 				return "Debug";
-			case Logging::LogSeverity::Warning:
+			case LogSeverity::Warning:
 				return "Warn";
-			case Logging::LogSeverity::Error:
+			case LogSeverity::Error:
 				return "Error";
-			case Logging::LogSeverity::Fatal:
+			case LogSeverity::Fatal:
 				return "Fatal";
 			default:
 				return "Unknown";
@@ -173,7 +173,7 @@ namespace Arrow::Logging
 		{
 			time_t time = std::time(nullptr);
 			tm localTime = tm();
-#ifdef ARW_MSVC
+#ifdef _MSC_VER
 			localtime_s(&localTime, &time);
 #else
             localtime_r(&time, &localTime);
@@ -200,7 +200,7 @@ namespace Arrow::Logging
 		{
 			time_t time = std::time(nullptr);
 			tm localTime = tm();
-#ifdef ARW_MSVC
+#ifdef _MSC_VER
             localtime_s(&localTime, &time);
 #else
             localtime_r(&time, &localTime);
@@ -237,37 +237,37 @@ namespace Arrow::Logging
 
 // Logging macros
 
-#define ARW_LOG_CORE_INFO(...) Arrow::Logging::Logger::Get()->Log(Arrow::Logging::MessageType::Core, Arrow::Logging::LogSeverity::Info, __VA_ARGS__)
-#define ARW_LOG_CORE_DEBUG(...) Arrow::Logging::Logger::Get()->Log(Arrow::Logging::MessageType::Core, Arrow::Logging::LogSeverity::Debug, __VA_ARGS__)
-#define ARW_LOG_CORE_WARN(...) Arrow::Logging::Logger::Get()->Log(Arrow::Logging::MessageType::Core, Arrow::Logging::LogSeverity::Warning, __VA_ARGS__)
-#define ARW_LOG_CORE_ERROR(...) Arrow::Logging::Logger::Get()->Log(Arrow::Logging::MessageType::Core, Arrow::Logging::LogSeverity::Error, __VA_ARGS__)
-#define ARW_LOG_CORE_FATAL(...) Arrow::Logging::Logger::Get()->Log(Arrow::Logging::MessageType::Core, Arrow::Logging::LogSeverity::Fatal, __VA_ARGS__)
+#define ARWH_LOG_CORE_INFO(...) arwh::Logger::Get()->Log(arwh::MessageType::Core, arwh::LogSeverity::Info, __VA_ARGS__)
+#define ARWH_LOG_CORE_DEBUG(...) arwh::Logger::Get()->Log(arwh::MessageType::Core, arwh::LogSeverity::Debug, __VA_ARGS__)
+#define ARWH_LOG_CORE_WARN(...) arwh::Logger::Get()->Log(arwh::MessageType::Core, arwh::LogSeverity::Warning, __VA_ARGS__)
+#define ARWH_LOG_CORE_ERROR(...) arwh::Logger::Get()->Log(arwh::MessageType::Core, arwh::LogSeverity::Error, __VA_ARGS__)
+#define ARWH_LOG_CORE_FATAL(...) arwh::Logger::Get()->Log(arwh::MessageType::Core, arwh::LogSeverity::Fatal, __VA_ARGS__)
 
-#define ARW_LOG_TAG_CORE_INFO(tag, ...) Arrow::Logging::Logger::Get()->LogTagged(Arrow::Logging::MessageType::Core, Arrow::Logging::LogSeverity::Info, tag, __VA_ARGS__)
-#define ARW_LOG_TAG_CORE_DEBUG(tag, ...) Arrow::Logging::Logger::Get()->LogTagged(Arrow::Logging::MessageType::Core, Arrow::Logging::LogSeverity::Debug, tag, __VA_ARGS__)
-#define ARW_LOG_TAG_CORE_WARN(tag, ...) Arrow::Logging::Logger::Get()->LogTagged(Arrow::Logging::MessageType::Core, Arrow::Logging::LogSeverity::Warning, tag, __VA_ARGS__)
-#define ARW_LOG_TAG_CORE_ERROR(tag, ...) Arrow::Logging::Logger::Get()->LogTagged(Arrow::Logging::MessageType::Core, Arrow::Logging::LogSeverity::Error, tag, __VA_ARGS__)
-#define ARW_LOG_TAG_CORE_FATAL(tag, ...) Arrow::Logging::Logger::Get()->LogTagged(Arrow::Logging::MessageType::Core, Arrow::Logging::LogSeverity::Fatal, tag, __VA_ARGS__)
+#define ARWH_LOG_TAG_CORE_INFO(tag, ...) arwh::Logger::Get()->LogTagged(arwh::MessageType::Core, arwh::LogSeverity::Info, tag, __VA_ARGS__)
+#define ARWH_LOG_TAG_CORE_DEBUG(tag, ...) arwh::Logger::Get()->LogTagged(arwh::MessageType::Core, arwh::LogSeverity::Debug, tag, __VA_ARGS__)
+#define ARWH_LOG_TAG_CORE_WARN(tag, ...) arwh::Logger::Get()->LogTagged(arwh::MessageType::Core, arwh::LogSeverity::Warning, tag, __VA_ARGS__)
+#define ARWH_LOG_TAG_CORE_ERROR(tag, ...) arwh::Logger::Get()->LogTagged(arwh::MessageType::Core, arwh::LogSeverity::Error, tag, __VA_ARGS__)
+#define ARWH_LOG_TAG_CORE_FATAL(tag, ...) arwh::Logger::Get()->LogTagged(arwh::MessageType::Core, arwh::LogSeverity::Fatal, tag, __VA_ARGS__)
 
-#define ARW_LOG_INFO(...) Arrow::Logging::Logger::Get()->Log(Arrow::Logging::MessageType::User, Arrow::Logging::LogSeverity::Info, __VA_ARGS__)
-#define ARW_LOG_DEBUG(...) Arrow::Logging::Logger::Get()->Log(Arrow::Logging::MessageType::User, Arrow::Logging::LogSeverity::Debug, __VA_ARGS__)
-#define ARW_LOG_WARN(...) Arrow::Logging::Logger::Get()->Log(Arrow::Logging::MessageType::User, Arrow::Logging::LogSeverity::Warning, __VA_ARGS__)
-#define ARW_LOG_ERROR(...) Arrow::Logging::Logger::Get()->Log(Arrow::Logging::MessageType::User, Arrow::Logging::LogSeverity::Error, __VA_ARGS__)
-#define ARW_LOG_FATAL(...) Arrow::Logging::Logger::Get()->Log(Arrow::Logging::MessageType::User, Arrow::Logging::LogSeverity::Fatal, __VA_ARGS__)
+#define ARWH_LOG_INFO(...) arwh::Logger::Get()->Log(arwh::MessageType::User, arwh::LogSeverity::Info, __VA_ARGS__)
+#define ARWH_LOG_DEBUG(...) arwh::Logger::Get()->Log(arwh::MessageType::User, arwh::LogSeverity::Debug, __VA_ARGS__)
+#define ARWH_LOG_WARN(...) arwh::Logger::Get()->Log(arwh::MessageType::User, arwh::LogSeverity::Warning, __VA_ARGS__)
+#define ARWH_LOG_ERROR(...) arwh::Logger::Get()->Log(arwh::MessageType::User, arwh::LogSeverity::Error, __VA_ARGS__)
+#define ARWH_LOG_FATAL(...) arwh::Logger::Get()->Log(arwh::MessageType::User, arwh::LogSeverity::Fatal, __VA_ARGS__)
 
-#define ARW_LOG_TAG_INFO(tag, ...) Arrow::Logging::Logger::Get()->LogTagged(Arrow::Logging::MessageType::User, Arrow::Logging::LogSeverity::Info, tag, __VA_ARGS__)
-#define ARW_LOG_TAG_DEBUG(tag, ...) Arrow::Logging::Logger::Get()->LogTagged(Arrow::Logging::MessageType::User, Arrow::Logging::LogSeverity::Debug, tag, __VA_ARGS__)
-#define ARW_LOG_TAG_WARN(tag, ...) Arrow::Logging::Logger::Get()->LogTagged(Arrow::Logging::MessageType::User, Arrow::Logging::LogSeverity::Warning, tag, __VA_ARGS__)
-#define ARW_LOG_TAG_ERROR(tag, ...) Arrow::Logging::Logger::Get()->LogTagged(Arrow::Logging::MessageType::User, Arrow::Logging::LogSeverity::Error, tag, __VA_ARGS__)
-#define ARW_LOG_TAG_FATAL(tag, ...) Arrow::Logging::Logger::Get()->LogTagged(Arrow::Logging::MessageType::User, Arrow::Logging::LogSeverity::Fatal, tag, __VA_ARGS__)
+#define ARWH_LOG_TAG_INFO(tag, ...) arwh::Logger::Get()->LogTagged(arwh::MessageType::User, arwh::LogSeverity::Info, tag, __VA_ARGS__)
+#define ARWH_LOG_TAG_DEBUG(tag, ...) arwh::Logger::Get()->LogTagged(arwh::MessageType::User, arwh::LogSeverity::Debug, tag, __VA_ARGS__)
+#define ARWH_LOG_TAG_WARN(tag, ...) arwh::Logger::Get()->LogTagged(arwh::MessageType::User, arwh::LogSeverity::Warning, tag, __VA_ARGS__)
+#define ARWH_LOG_TAG_ERROR(tag, ...) arwh::Logger::Get()->LogTagged(arwh::MessageType::User, arwh::LogSeverity::Error, tag, __VA_ARGS__)
+#define ARWH_LOG_TAG_FATAL(tag, ...) arwh::Logger::Get()->LogTagged(arwh::MessageType::User, arwh::LogSeverity::Fatal, tag, __VA_ARGS__)
 
 // Assert macros
 
-#ifdef ARW_WINDOWS
-#define ARW_DEBUG_BREAK __debugbreak();
+#ifdef _MSC_VER
+#define ARWH_DEBUG_BREAK __debugbreak();
 #else
-#define ARW_DEBUG_BREAK
+#define ARWH_DEBUG_BREAK
 #endif
 
-#define ARW_CORE_ASSERT(condition, ...) { if (!(condition)) { Arrow::Logging::Logger::Get()->LogAssert(Arrow::Logging::MessageType::Core, ##__VA_ARGS__); ARW_DEBUG_BREAK exit(-1); } }
-#define ARW_ASSERT(condition, ...) { if (!(condition)) { Arrow::Logging::Logger::Get()->LogAssert(Arrow::Logging::MessageType::User, ##__VA_ARGS__); ARW_DEBUG_BREAK exit(-1); } }
+#define ARWH_CORE_ASSERT(condition, ...) { if (!(condition)) { arwh::Logger::Get()->LogAssert(arwh::MessageType::Core, ##__VA_ARGS__); ARWH_DEBUG_BREAK exit(-1); } }
+#define ARWH_ASSERT(condition, ...) { if (!(condition)) { arwh::Logger::Get()->LogAssert(arwh::MessageType::User, ##__VA_ARGS__); ARWH_DEBUG_BREAK exit(-1); } }

@@ -1,6 +1,4 @@
-include "vendor/glad"
-
-project "oglfv2"
+project "Arrowhead"
     language "C++"
     cppdialect "C++17"
     kind "StaticLib"
@@ -18,38 +16,86 @@ project "oglfv2"
 		"src/**.cpp"
     }
 
+    removefiles
+    {
+        "src/Platform/**.h",
+		"src/Platform/**.cpp"
+    }
+
     includedirs
     {
         "src",
-        "include",
-        path.join(PACKAGE_DIRS["glad"], "include"),
-        path.join(PACKAGE_DIRS["glfw"], "include"),
-        PACKAGE_DIRS["glm"],
-        PACKAGE_DIRS["stb"]
+        "include"
     }
 
-    links
-    {
-        "glad"
-    }
+    filter "system:windows"
+        systemversion "latest"
 
-    defines
-    {
-        "GLFW_INCLUDE_NONE",
-        "GLDEBUG_OMIT_SEVERITY_NOTIFICATION"
-    }
+        files
+        {
+            "src/Platform/Windows/**.h",
+            "src/Platform/Windows/**.cpp",
+        }
+
+        defines
+		{
+			"ARWH_WINDOWS",
+			"ARWH_MSVC"
+		}
+
+    filter "system:linux"
+        files
+        {
+			"%{prj.name}/src/Arrow/Platform/Linux/**.h",
+			"%{prj.name}/src/Arrow/Platform/Linux/**.cpp"
+        }
+
+        links
+        {
+            "xcb"
+        }
+
+        defines
+        {
+            "ARWH_LINUX",
+			"ARWH_GCC"
+        }
+
+    filter "system:macosx"
+		systemversion "12.7:latest"
+
+		files
+		{
+			"%{prj.name}/src/Arrow/Platform/MacOS/**.h",
+			"%{prj.name}/src/Arrow/Platform/MacOS/**.cpp",
+			"%{prj.name}/src/Arrow/Platform/MacOS/**.mm"
+		}
+
+        links
+		{
+			"Cocoa.framework"
+		}
+
+		defines
+		{
+			"ARWH_MACOS",
+			"ARWH_CLANG"
+		}
 
     filter "configurations:Debug"
+        defines "ARWH_DEBUG"
         runtime "Debug"
         symbols "on"
 
     filter "configurations:Release"
+        defines "ARWH_RELEASE"
         runtime "Release"
         optimize "Speed"
 
     filter "configurations:Dist"
+        defines "ARWH_DIST"
         runtime "Release"
         optimize "Speed"
         symbols "off"
 
-PACKAGE_DIRS["oglfv2"] = path.getabsolute(".")
+PACKAGE_DIRS["arrowhead"] = path.getabsolute(".")

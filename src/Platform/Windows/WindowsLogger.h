@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Arrow/Core/Logger.h"
+#include "Arrowhead/Logger.h"
 
-namespace Arrow::Logging
+namespace arwh
 {
 	class WindowsLogger : public Logger
 	{

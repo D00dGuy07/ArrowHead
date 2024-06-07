@@ -1,14 +1,14 @@
-#include "Arrow/Core/Logger.h"
+#include "Arrowhead/Logger.h"
 
-#if defined ARW_WINDOWS
-#include "Arrow/Platform/Windows/WindowsLogger.h"
-#elif defined ARW_MACOS
-#include "Arrow/Platform/MacOS/MacOSLogger.h"
-#elif defined ARW_LINUX
-#include "Arrow/Platform/Linux/LinuxLogger.h"
+#if defined ARWH_WINDOWS
+#include "Platform/Windows/WindowsLogger.h"
+#elif defined ARWH_MACOS
+#include "Platform/MacOS/MacOSLogger.h"
+#elif defined ARWH_LINUX
+#include "Platform/Linux/LinuxLogger.h"
 #endif
 
-namespace Arrow::Logging
+namespace arwh
 {
 	Logger::~Logger()
 	{
@@ -18,11 +18,11 @@ namespace Arrow::Logging
 
 	void Logger::Init()
 	{
-#if defined ARW_WINDOWS
+#if defined ARWH_WINDOWS
 		s_Logger = new WindowsLogger();
-#elif defined ARW_MACOS
+#elif defined ARWH_MACOS
         s_Logger = new MacOSLogger();
-#elif defined ARW_LINUX
+#elif defined ARWH_LINUX
         s_Logger = new LinuxLogger();
 #else
 		static_assert(false, "There is no logger implementation for this platform!");

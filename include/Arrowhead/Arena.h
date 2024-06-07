@@ -5,7 +5,7 @@
 #include <utility>
 #include <memory>
 
-namespace Arrow
+namespace arwh
 {
 	class Arena
 	{

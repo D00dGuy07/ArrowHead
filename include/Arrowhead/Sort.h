@@ -2,10 +2,10 @@
 
 #include <vector>
 
-namespace Sorting
+namespace arwh::Sorting
 {
 	template<typename t>
-	void MoveInsert(std::vector<t>& data, int32_t from, int32_t to)
+	void MoveInsert(t* data, int32_t from, int32_t to)
 	{
 		t temp = data[to];
 		data[to] = data[from];
@@ -30,18 +30,9 @@ namespace Sorting
 		}
 	}
 
-	enum class Algorithm
-	{
-		Insertion,
-		Quick,
-		Heap,
-		HeapBottomUp,
-		Introsort
-	};
-
 	// Insertion sort
 	template<typename t, class c>
-	void SortInsertion(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	void SortInsertion(t* data, int32_t begin, int32_t end, c compare)
 	{
 		int32_t tempIndex = 0;
 		for (int32_t i = begin + 1; i <= end; i++)
@@ -65,7 +56,7 @@ namespace Sorting
 
 	// Quick sort (https://www.geeksforgeeks.org/quick-sort/)
 	template<typename t, class c>
-	int32_t SortQuickPartition(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	int32_t SortQuickPartition(t* data, int32_t begin, int32_t end, c compare)
 	{
 		t pivot = data[end];
 		int32_t i = (begin - 1);
@@ -88,7 +79,7 @@ namespace Sorting
 	}
 
 	template<typename t, class c>
-	void SortQuick(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	void SortQuick(t* data, int32_t begin, int32_t end, c compare)
 	{
 		if (begin < end)
 		{
@@ -101,7 +92,7 @@ namespace Sorting
 
 	// Heap Sort
 	template<typename t, class c>
-	void SiftDown(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	void SiftDown(t* data, int32_t begin, int32_t end, c compare)
 	{
 		int32_t root = begin;
 		while (2 * root + 1 <= end)
@@ -127,14 +118,14 @@ namespace Sorting
 	}
 
 	template<typename t, class c>
-	void Heapify(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	void Heapify(t* data, int32_t begin, int32_t end, c compare)
 	{
 		for (int32_t i = (end - 1) / 2; i >= begin; i--)
 			SiftDown<t>(data, i, end, compare);
 	}
 
 	template<typename t, class c>
-	void SortHeap(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	void SortHeap(t* data, int32_t begin, int32_t end, c compare)
 	{
 		Heapify<t>(data, begin, end, compare);
 
@@ -154,7 +145,7 @@ namespace Sorting
 	// Heap Sort Bottom Up
 
 	template<typename t, class c>
-	int32_t LeafSearch(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	int32_t LeafSearch(t* data, int32_t begin, int32_t end, c compare)
 	{
 		int32_t j = begin;
 		while (2 * j + 2 <= end)
@@ -170,7 +161,7 @@ namespace Sorting
 	}
 
 	template<typename t, class c>
-	void SiftDownBottomUp(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	void SiftDownBottomUp(t* data, int32_t begin, int32_t end, c compare)
 	{
 		int32_t j = LeafSearch<t>(data, begin, end, compare);
 		while (compare(data[begin], data[j]))
@@ -187,14 +178,14 @@ namespace Sorting
 	}
 
 	template<typename t, class c>
-	void HeapifyBottomUp(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	void HeapifyBottomUp(t* data, int32_t begin, int32_t end, c compare)
 	{
 		for (int32_t i = (end - 1) / 2; i >= begin; i--)
 			SiftDownBottomUp<t>(data, i, end, compare);
 	}
 
 	template<typename t, class c>
-	void SortHeapBottomUp(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	void SortHeapBottomUp(t* data, int32_t begin, int32_t end, c compare)
 	{
 		HeapifyBottomUp<t>(data, begin, end, compare);
 
@@ -214,7 +205,7 @@ namespace Sorting
 	// Introsort
 
 	template<typename t, class c>
-	void IntrosortRecurse(std::vector<t>& data, int32_t begin, int32_t end, int32_t depthLimit, c compare)
+	void IntrosortRecurse(t* data, int32_t begin, int32_t end, int32_t depthLimit, c compare)
 	{
 		int32_t size = end - begin + 1;
 
@@ -273,31 +264,43 @@ namespace Sorting
 	}
 
 	template<typename t, class c>
-	void SortIntro(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+	void SortIntro(t* data, int32_t begin, int32_t end, c compare)
 	{
 		int32_t depthLimit = 2 * static_cast<int32_t>(std::log(end - begin + 1));
 		IntrosortRecurse<t>(data, begin, end, depthLimit, compare);
 	}
+}
 
-	template<Algorithm a, typename t, class c>
-	void Sort(std::vector<t>& data, int32_t begin, int32_t end, c compare)
+namespace arwh
+{
+	enum class SortingAlgorithm
+	{
+		Insertion,
+		Quick,
+		Heap,
+		HeapBottomUp,
+		Introsort
+	};
+
+	template<SortingAlgorithm a, typename t, class c>
+	void Sort(t* data, int32_t begin, int32_t end, c compare)
 	{
 		switch (a)
 		{
-		case Algorithm::Insertion:
-			SortInsertion(data, begin, end, compare);
+		case SortingAlgorithm::Insertion:
+			Sorting::SortInsertion(data, begin, end, compare);
 			break;
-		case Algorithm::Quick:
-			SortQuick(data, begin, end, compare);
+		case SortingAlgorithm::Quick:
+			Sorting::SortQuick(data, begin, end, compare);
 			break;
-		case Algorithm::Heap:
-			SortHeap(data, begin, end, compare);
+		case SortingAlgorithm::Heap:
+			Sorting::SortHeap(data, begin, end, compare);
 			break;
-		case Algorithm::HeapBottomUp:
-			SortHeapBottomUp(data, begin, end, compare);
+		case SortingAlgorithm::HeapBottomUp:
+			Sorting::SortHeapBottomUp(data, begin, end, compare);
 			break;
-		case Algorithm::Introsort:
-			SortIntro(data, begin, end, compare);
+		case SortingAlgorithm::Introsort:
+			Sorting::SortIntro(data, begin, end, compare);
 			break;
 		default:
 			break;

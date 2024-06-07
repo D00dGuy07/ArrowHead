@@ -1,11 +1,11 @@
-#include "Arrow/Platform/MacOS/MacOSLogger.h"
+#include "Platform/MacOS/MacOSLogger.h"
 
 #include <iostream>
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
-namespace Arrow::Logging
+namespace arwh
 {
     void MacOSLogger::PlatformCoreAssert(const std::string& message) const
     {

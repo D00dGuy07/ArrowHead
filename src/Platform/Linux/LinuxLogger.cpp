@@ -1,8 +1,8 @@
-#include "Arrow/Platform/Linux/LinuxLogger.h"
+#include "Platform/Linux/LinuxLogger.h"
 
 #include <iostream>
 
-namespace Arrow::Logging
+namespace arwh
 {
     void LinuxLogger::PlatformCoreAssert(const std::string& message) const {}
     void LinuxLogger::PlatformUserAssert(const std::string& message) const {}

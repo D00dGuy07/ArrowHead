@@ -1,8 +1,8 @@
-#include "Arrow/Platform//Windows/WindowsLogger.h"
+#include "Platform/Windows/WindowsLogger.h"
 
 #include <Windows.h>
 
-namespace Arrow::Logging
+namespace arwh
 {
 	void WindowsLogger::PlatformCoreAssert(const std::string& message) const
 	{

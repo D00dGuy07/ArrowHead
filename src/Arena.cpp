@@ -1,12 +1,12 @@
-#include "Arrow/Core/Arena.h"
+#include "Arrowhead/Arena.h"
 
-#include "Arrow/Core/Logger.h"
+#include "Arrowhead/Logger.h"
 
 #include <cstring>
 
 constexpr size_t ScratchSize = 1024 * 1024;
 
-namespace Arrow
+namespace arwh
 {
 	Arena::Arena(size_t size)
 		: m_TotalSize(size)
@@ -20,7 +20,7 @@ namespace Arrow
 	{
 		// Check for overflow
 		m_AllocatedSize += size;
-		ARW_CORE_ASSERT(m_AllocatedSize < m_TotalSize, "Arena pushed out of bounds");
+		ARWH_CORE_ASSERT(m_AllocatedSize < m_TotalSize, "Arena pushed out of bounds");
 
 		// Increment internal pointer and return the block
 		void* block = m_Position;
@@ -47,7 +47,7 @@ namespace Arrow
 	void Arena::SetPosBack(size_t pos)
 	{
 		// Prevent overflow
-		ARW_CORE_ASSERT(pos < m_TotalSize, "Arena set pos must be inside the bounds");
+		ARWH_CORE_ASSERT(pos < m_TotalSize, "Arena set pos must be inside the bounds");
 		m_AllocatedSize = pos;
 		m_Position = m_Data + pos;
 	}

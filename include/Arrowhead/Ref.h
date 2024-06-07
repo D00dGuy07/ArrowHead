@@ -3,7 +3,7 @@
 #include <atomic>
 #include <type_traits>
 
-namespace Arrow
+namespace arwh
 {
 	class RefCount
 	{
